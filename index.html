@@ -172,7 +172,7 @@ const SOCK_COLORS = ['#ff8fb8','#8fd3ff','#b69cff','#ffd36e','#8fe3b9','#ffab8f'
 let socks = [];
 const throwers = [[2150,120],[3300,100],[4400,90],[5600,100],[6650,110],[7300,100],[8200,90],[8600,120]].map(([x,y]) => ({x,y,timer:0}));
 let checkpoints = [1360,2600,3840,5100,6400,7600].map(x => ({x, on:false}));
-const signs = [[150,'> MOVE'],[700,'SPACE = JUMP'],[1880,'BOOMERANGS!!']];
+const signs = [[150,'> MOVE'],[700,'SPACE = JUMP'],[1880,"DON'T LET THE BOOMERANGS HIT YOU"]];
 const bgClouds = Array.from({length:12},(_,i)=>({x:i*190+((i*97)%80), y:40+((i*53)%150), s:1+((i*7)%3)*0.4}));
 
 // ---------- state ----------
@@ -336,8 +336,8 @@ function burst(x,y,colors,n=16,sp=4){ for(let i=0;i<n;i++){ const a=Math.random(
 
 function hurt(fromX){
   if (P.inv>0 || P.dead>0) return;
-  P.sad=1.5; P.inv=1.7; P.stun=.35;
-  P.vx = fromX < P.x+P.w/2 ? 6.5 : -6.5; P.vy=-7; P.on=false;
+  P.sad=1.5; P.inv=1.7; P.stun=.2;
+  P.vx = fromX < P.x+P.w/2 ? 3.5 : -3.5; P.vy=-4; P.on=false;
   sfx.hit(); burst(P.x+15,P.y+20,['#fff','#ffd36e','#ff8fb8'],10,3);
 }
 
@@ -498,8 +498,10 @@ function drawBoom(b){
 }
 function drawPlayer(faceKey){
   if (P.dead>0 && P.y>H) return;
-  if (P.inv>0 && Math.floor(T*14)%2 && state==='play') return;
   const x=Math.round(P.x), y=Math.round(P.y);
+  ctx.save();
+  if (P.inv>0 && state==='play') { const s=1+0.07*Math.sin(T*22)*Math.min(1,P.inv); ctx.translate(x+15,y+40); ctx.scale(s,s); ctx.translate(-(x+15),-(y+40));
+    ctx.fillStyle='rgba(255,120,160,'+(0.25*Math.min(1,P.inv))+')'; ctx.beginPath(); ctx.arc(x+15,y+24,40,0,7); ctx.fill(); }
   const run = P.on && Math.abs(P.vx)>.3, ph=Math.sin(P.anim*3);
   const ink='#4a2c4f';
   // legs
@@ -518,6 +520,7 @@ function drawPlayer(faceKey){
   ctx.save(); ctx.beginPath(); ctx.arc(hx,hy,r,0,7); ctx.clip();
   if (im.complete) { ctx.imageSmoothingEnabled=true; ctx.drawImage(im,hx-r,hy-r,r*2,r*2); }
   if (faceKey==='dark') { ctx.fillStyle='rgba(120,0,30,.25)'; ctx.fillRect(hx-r,hy-r,r*2,r*2); }
+  ctx.restore();
   ctx.restore();
 }
 function drawParts(dt){
