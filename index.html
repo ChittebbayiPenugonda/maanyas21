@@ -410,7 +410,7 @@ function update(dt){
     openCard(count); break;
   }
 
-  if (P.x > 8700 && count<21) { endHintT -= dt; if (endHintT<=0) { toast((21-count)+' sock'+(21-count>1?'s':'')+' still hiding... go back!'); endHintT=4; } }
+  if (P.x > 8700 && count<21) { endHintT -= dt; if (endHintT<=0) { toast((21-count)+' sock'+(21-count>1?'s':'')+' still hiding goon. go back and get them'); endHintT=4; } }
 
   cam += ((P.x - W*0.4) - cam)*.12; cam = Math.max(0, Math.min(LEVEL_END-W, cam));
 }
@@ -585,7 +585,7 @@ function glitchFx(){
   if (Math.random()<k*.12){ ctx.fillStyle='#000'; ctx.fillRect(0,0,CW,CH); }
   for (let i=0;i<60*k;i++){ ctx.fillStyle=Math.random()<.5?'#fff':'#f00'; ctx.fillRect(Math.random()*CW,Math.random()*CH,4+Math.random()*30,2); }
   if (k>.4 && Math.random()<.3){ ctx.font='40px "Press Start 2P", monospace'; ctx.fillStyle='rgba(255,40,70,.8)'; ctx.textAlign='center';
-    ctx.fillText(['you found them all...','m a a n y a','there is no escape','21'][Math.floor(Math.random()*4)], CW/2+(Math.random()-.5)*40, CH/2+(Math.random()-.5)*200); ctx.textAlign='left'; }
+    ctx.fillText(['uh oh','m a a n y a','be scared','21'][Math.floor(Math.random()*4)], CW/2+(Math.random()-.5)*40, CH/2+(Math.random()-.5)*200); ctx.textAlign='left'; }
 }
 
 let last = performance.now(), acc = 0;
