@@ -41,8 +41,8 @@ canvas{width:100%;height:100%;display:block}
 @keyframes pop{from{transform:scale(.4) rotate(-6deg);opacity:0}}
 
 #scare{position:absolute;inset:0;background:#000;overflow:hidden}
-#scare img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:slam .3s cubic-bezier(.2,1.7,.4,1) both,flick .14s steps(2) infinite}
-@keyframes slam{from{transform:scale(2.6)}to{transform:scale(1.08)}}
+#scare img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;animation:slam .3s cubic-bezier(.2,1.7,.4,1) both,flick .14s steps(2) infinite}
+@keyframes slam{from{transform:scale(2.2)}to{transform:scale(1)}}
 @keyframes flick{0%{filter:brightness(2.6) contrast(1.7) saturate(.6)}50%{filter:brightness(1.3) contrast(2.2) hue-rotate(-25deg) saturate(1.6)}}
 #stage.shake{animation:shake .07s infinite}
 @keyframes shake{0%{transform:translate(.6cqw,-.4cqw)}33%{transform:translate(-.7cqw,.5cqw)}66%{transform:translate(.4cqw,.6cqw)}}
@@ -336,8 +336,8 @@ function burst(x,y,colors,n=16,sp=4){ for(let i=0;i<n;i++){ const a=Math.random(
 
 function hurt(fromX){
   if (P.inv>0 || P.dead>0) return;
-  P.sad=1.5; P.inv=1.7; P.stun=.2;
-  P.vx = fromX < P.x+P.w/2 ? 3.5 : -3.5; P.vy=-4; P.on=false;
+  P.sad=1.5; P.inv=1.7; P.stun=.45;
+  P.vx = fromX < P.x+P.w/2 ? 9 : -9; P.vy=-8; P.on=false;
   sfx.hit(); burst(P.x+15,P.y+20,['#fff','#ffd36e','#ff8fb8'],10,3);
 }
 
